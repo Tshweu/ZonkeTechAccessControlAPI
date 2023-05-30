@@ -17,8 +17,13 @@ public class UserMongoDBService{
     public async Task<User?> GetAsync(string id){
         return await _userCollection.Find(user => user.Id == id).FirstOrDefaultAsync();
     }
-    
+    public async Task CreateAsync(User user){
+        await _userCollection.InsertOneAsync(user);
+    }
     public async Task UpdateAsync(string id,User updatedBook) {
         await _userCollection.ReplaceOneAsync(x => x.Id == id,updatedBook);
     }
+    public async Task DeleteAsync(string id) {
+        await _userCollection.DeleteOneAsync(x => x.Id == id);
+    } 
 }
